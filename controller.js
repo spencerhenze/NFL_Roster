@@ -41,10 +41,9 @@ function NFLController() {
 
     function drawRoster() {
         var roster = nflService.getRoster();
-        debugger
         var template = '';
 
-        for(player in roster) {
+        roster.forEach(player => {
             template += `
                 <div class="card-wrapper">
                     <div class="player-card">
@@ -59,8 +58,7 @@ function NFLController() {
                     </div>
                 </div>
             `
-        }
-
+        })
         document.getElementById('my-roster').innerHTML = template;
     }
 

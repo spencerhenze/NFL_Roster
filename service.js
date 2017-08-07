@@ -1,7 +1,7 @@
 function NFLService(url, callback) {
 
     var playersData = [];
-    var myRoster = {};
+    var myRoster = [];
 
     function loadPlayersData() {
         //check to see if the data is already stored locally
@@ -68,20 +68,29 @@ function NFLService(url, callback) {
     }
 
     this.getRoster = function () {
-        // return JSON.parse(JSON.stringify(myRoster));
-        return myRoster;
+        return JSON.parse(JSON.stringify(myRoster));
     }
 
 
     // Add / remove funtions
     this.addPlayer = function (id) {
+        debugger
         var player = playersData.find(player => player.id == id)
 
-        myRoster[id] = player;
+        // check to see if the player exists in the roster. If not, add them.
+        if (myRoster.indexOf(player) == -1) {
+            myRoster.push(player);
+        }
     };
 
     this.removePlayer = function (id) {
-
+        for (var i = 0; i < myRoster.length; i++) {
+            var currentPlayer = myRoster[i];
+            if (currentPlayer.id == id) {
+                myRoster.splice(i, 1);
+            }
+        }
+        myRoster.splice(id, 1);
     };
 
 

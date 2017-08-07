@@ -1,14 +1,14 @@
 function NFLController() {
     var nflService = new NFLService(apiUrl, ready);
 
-    function clearResults(){
+    function clearResults() {
         document.getElementById('search-results').innerHTML = '';
     }
 
     function drawResults(players) {
         var counter = 0;
 
-        if (counter !=0){
+        if (counter != 0) {
             clearResults();
         }
 
@@ -34,7 +34,7 @@ function NFLController() {
             }
         });
 
-        counter ++;
+        counter++;
 
         document.getElementById('search-results').innerHTML = template;
     } // end drawTeam() function
@@ -80,39 +80,54 @@ function NFLController() {
     function getAbreviation(userInput) {
         // change user input to all uppercase
         userInput = userInput.toUpperCase();
+        var abbreviation = '';
 
         // if the user's input contains "back" and does not contain any spaces.
         if (userInput.search('BACK') != -1 && userInput.search(' ') == -1) {
-            var abbreviation = '';
 
             var charArray = userInput.split('');    // split the input into an array
-
-            var delimIndex = userInput.length - 4;
 
             //build the code
             for (var i = 0; i < charArray.length; i++) {
                 var char = charArray[i];
-                if (abbreviation.length < 2) {
-                    if (i == 0) {
-                        abbreviation += char;
-                    }
-                    if (i == charArray.length - 4) {
-                        abbreviation += char;
-                    }
-                } else {
-                    return abbreviation
+                if (i == 0) {
+                    abbreviation += char;
+                }
+                if (i == charArray.length - 4) {
+                    abbreviation += char;
                 }
             }
         }
 
-        // if the user's input does not contain "back", or if there is a space
+        // if not, split the input into a word array and add each first letter to the abbreviation.
         var wordArray = userInput.split(' ');
+        if (wordArray.length > 1) {
+            wordArray.forEach(word => {
+                abbreviation += word[0];
+            })
+        }
 
-        wordArray.forEach(word => {
-            abbreviation += word[0];
-        });
 
         return abbreviation;
+    }
+
+    function capitalizeFirsts(name) {
+        var nameArray = name.split(' ');
+        var capName = '';
+
+        for (var i = 0; i < nameArray.length; i++) {
+            var word = nameArray[i];
+            let wordArray = word.split('');
+            for (var i = 0; i < wordArray.length; i++) {
+                let letter = wordArray[i];
+                if (i == 0) {
+                    capName += letter.toUpperCase();
+                }
+                else{
+                    capName += letter.toLowerCase();
+                }
+            }
+        }
     }
 
     //public area
@@ -129,7 +144,9 @@ function NFLController() {
     };
 
     this.getPlayersByName = function (name) {
-        nflService.getPlayersByTeam(name, drawResults);
+        debugger
+        var capName = capitalizeFirsts(name);
+        nflService.getPlayersByName(capName, drawResults);
     };
 
     // this is a general search function that acts as an interface for the go button. It looks at which control the input is coming from and calls the appropriate get function.
@@ -137,20 +154,22 @@ function NFLController() {
         e.preventDefault();
 
         var query = '';
+        var form = e.target;
 
         if (e.target.team.value) {
-            query = e.target.team.value;
-            getPlayersByTeam(query);
+            query = form.team.value;
+            this.getPlayersByTeam(query);
         }
         if (e.target.position.value) {
-            query = e.target.position.value;
+            query = form.position.value;
             this.getPlayersByPosition(query);
         }
-        if (e.target.name.value) {
-            query = e.target.name.value;
-            getPlayersByName(query);
+        if (e.target.player.value) {
+            query = form.player.value;
+            this.getPlayersByName(query);
         }
 
+        form.reset();
         // return alert("Please enter a valid search");
 
     };

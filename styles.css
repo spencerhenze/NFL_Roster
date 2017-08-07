@@ -1,5 +1,8 @@
 body{
     background-color: black;
+    background-image: url("//static.nfl.com/static/content/public/photo/2017/01/15/0ap3000000775084.jpg");
+    background-size: cover;
+    background-position: fixed;
 }
 
 .site-header{
@@ -9,6 +12,19 @@ body{
     align-items: center;
 }
 
+.site-banner{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-image{
+    max-height: 250px;
+    width: auto;
+
+}
+
 .site-title{
     font-size: 12rem;
     text-align: center;
@@ -16,6 +32,11 @@ body{
     text-shadow: 0 0 50px blue;
 }
 
+.placeholder-text{
+    color: gray;
+    font-weight: 600px;
+    text-align: center;
+}
 
 .search-control{
     display: block;

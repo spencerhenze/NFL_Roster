@@ -1,7 +1,7 @@
 function NFLService(url, callback) {
 
     var playersData = [];
-    var myRoster = [];
+    var myRoster = JSON.parse(localStorage.getItem('myRoster')) || [];
 
     function loadPlayersData() {
         //check to see if the data is already stored locally
@@ -27,6 +27,10 @@ function NFLService(url, callback) {
         });
     } // end loadPlayerData()
 
+    function saveRoster() {
+        localStorage.setItem('myRoster', JSON.stringify(myRoster));
+    }
+
     // call the loadPlayersData() function every time we create a new service
     loadPlayersData();
     console.log(playersData);
@@ -37,7 +41,7 @@ function NFLService(url, callback) {
     this.getPlayersByTeam = function (teamCode, cb) {
         //retrun an array of all players who match the given teamName
         var filteredPlayers = playersData.filter(player => {
-            //check the actual attribut name
+            //check the actual attribute name
             if (player.pro_team == teamCode) {
                 return true;
             }
@@ -74,12 +78,21 @@ function NFLService(url, callback) {
 
     // Add / remove funtions
     this.addPlayer = function (id) {
-        debugger
         var player = playersData.find(player => player.id == id)
 
-        // check to see if the player exists in the roster. If not, add them.
-        if (myRoster.indexOf(player) == -1) {
-            myRoster.push(player);
+        // limit the roster length to 15 players
+        if (myRoster.length <= 15) {
+
+            // check to see if the player exists in the roster. If not, add them.
+            if (myRoster.indexOf(player) == -1) {
+                myRoster.push(player);
+                saveRoster();
+                //remove the player from the search results
+                // playersData.splice()
+            }
+        }
+        else{
+            alert("Your roster is full! You can remove players if you really want to add this guy.")
         }
     };
 
@@ -88,9 +101,12 @@ function NFLService(url, callback) {
             var currentPlayer = myRoster[i];
             if (currentPlayer.id == id) {
                 myRoster.splice(i, 1);
+                //put the player back in the search results
+                // playersData.splice(0, 0, currentPlayer)
             }
         }
-        myRoster.splice(id, 1);
+        saveRoster();
+        // myRoster.splice(id, 1);
     };
 
 

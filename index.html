@@ -18,7 +18,8 @@
         <div class="row site-header">
             <div class="col-xs-12 site-banner">
                 <h1 class="site-title">NFL Roster</h1>
-                <img class="header-image img-responsive" src="//res.cloudinary.com/dvh7zccln/image/upload/v1502150560/NFL-logo_moqdvc.png" alt="">
+                <img class="header-image img-responsive" src="//res.cloudinary.com/dvh7zccln/image/upload/v1502150560/NFL-logo_moqdvc.png"
+                    alt="">
             </div>
         </div>
         <!--Main Window  -->
@@ -31,7 +32,7 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h2 class="panel-title">My Team Roster</h2>
+                        <h2 class="panel-title center-text">My Team Roster</h2>
                     </div>
                     <div class="panel-body">
                         <!--insert player cards here:  -->
@@ -54,26 +55,24 @@
                         <div class="clear-button">
                             <button type="button" class="btn btn-danger" onclick="app.controllers.nflController.clearRoster()">Clear Roster</button>
                         </div>
-                        <!--insert roster cards here:  -->
-                        <!-- <div id="my-team"></div> -->
 
                         <!--search section  -->
-                        <div class="panel panel-default">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h2 class="panel-title">Add Player</h2>
+                                <h2 class="panel-title"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Player</h2>
                             </div>
                             <div class="panel-body">
-                                <h3>Only enter text into one area per search.</h3>
-                                <form onsubmit="app.controllers.nflController.search(event)">
-                                    <label class="search-control" for="player">Player Name</label>
-                                    <input class="search-control" id="search-text" name="player" type="text" placeholder="John Ellway">
-                                    <label class="search-control" for="position">Player Position</label>
-                                    <input class="search-control" id="search-text" name="position" type="text" placeholder="Quarterback">
-                                    <label class="search-control" for="team">Player Team</label>
-                                    <input class="search-control" id="search-text" name="team" type="text" placeholder="San Francisco">
+                                <!--form selector buttons  -->
+                                <h4 class="center-text">Search by:</h4>
+                                <div class="btn-group button-container" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-success form-changer-button" onclick="app.controllers.nflController.loadForm('name')">Name</button>
+                                    <button type="button" class="btn btn-success form-changer-button" onclick="app.controllers.nflController.loadForm('pos')">Position</button>
+                                    <button type="button" class="btn btn-success form-changer-button" onclick="app.controllers.nflController.loadForm('team')">Team</button>
+                                </div>
 
-                                    <button id="submit-button" type="submit"> Go! </button>
-                                </form>
+                                <div id="dynamic-form">
+                                    <!--form inserts here  -->
+                                </div>
                             </div>
                         </div>
 

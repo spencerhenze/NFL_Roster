@@ -35,6 +35,10 @@ body{
     text-shadow: 0 0 50px blue;
 }
 
+.center-text{
+    text-align: center;
+}
+
 .placeholder-text{
     color: gray;
     font-weight: 600px;
@@ -44,6 +48,16 @@ body{
 .clear-button{
     margin: 10px;
     text-align: center;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+}
+
+.form-changer-button{
+    text-align: center;
+    /* margin: 10px; */
 }
 
 .search-control{

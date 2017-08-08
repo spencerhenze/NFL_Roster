@@ -4,6 +4,47 @@ function NFLController() {
     function clearResults() {
         document.getElementById('search-results').innerHTML = '';
     }
+    
+    // Draw functions
+    function drawForm(type) {
+        var template = '';
+
+        if (type == 'name') {
+            template = `
+                <h3>Searching by Name</h3>
+                <form onsubmit="app.controllers.nflController.search(event, '${type}')">
+                    <label class="search-control" for="player">Player Name</label>
+                    <input class="search-control" id="search-text" name="player" type="text" placeholder="John Ellway">
+
+                    <button id="submit-button" type="submit"> Go! </button>
+                </form>
+            `
+        }
+        if (type == 'pos') {
+            template = `
+                <h3>Searching by Position</h3>
+                <form onsubmit="app.controllers.nflController.search(event, '${type}')">
+                    <label class="search-control" for="position">Player Position</label>
+                    <input class="search-control" id="search-text" name="position" type="text" placeholder="Quarterback">
+
+                    <button id="submit-button" type="submit"> Go! </button>
+                </form>
+            `
+        }
+        if (type == 'team') {
+            template = `
+                <h3>Searching by Team</h3>
+                <form onsubmit="app.controllers.nflController.search(event, '${type}')">
+                    <label class="search-control" for="team">Player Team</label>
+                    <input class="search-control" id="search-text" name="team" type="text" placeholder="San Francisco">
+
+                    <button id="submit-button" type="submit"> Go! </button>
+                </form>
+            `
+        }
+
+        document.getElementById('dynamic-form').innerHTML = template;
+    }
 
     function drawResults(players) {
         var counter = 0;
@@ -14,7 +55,6 @@ function NFLController() {
 
         var template = ``
 
-        //TODO: fix these attribute names
         players.forEach(player => {
             if (player.pro_status) {
                 template += `
@@ -43,6 +83,12 @@ function NFLController() {
         var roster = nflService.getRoster();
         var template = '';
 
+        if (roster.length == 0) {
+            template = `
+                <h3 class="placeholder-text">Add some players!</h3>
+            `
+        }
+
         roster.forEach(player => {
             template += `
                 <div class="card-wrapper">
@@ -68,12 +114,6 @@ function NFLController() {
 
     function ready() {
         loading = false; // stop the spinner
-
-        //Now that all of our player data is back we can safely setup our bindings for the rest of the view.
-
-        // $('some-button').on('click', function () {
-        //     var teamSF = nflService.getPlayersByTeam("SF");
-        // });
     }
 
     // Takes in a string and returns only the first letters of each word, capitalized, as a new string that can be used to search for the team in the API.
@@ -123,7 +163,7 @@ function NFLController() {
                 if (i == 0) {
                     capName += letter.toUpperCase();
                 }
-                else{
+                else {
                     capName += letter.toLowerCase();
                 }
             }
@@ -131,6 +171,11 @@ function NFLController() {
     }
 
     //public area
+
+    // form selection buttons functions
+    this.loadForm = function (type) {
+        drawForm(type)
+    }
 
     //search functions
     this.getPlayersByTeam = function (team) {
@@ -144,27 +189,27 @@ function NFLController() {
     };
 
     this.getPlayersByName = function (name) {
-        debugger
         var capName = capitalizeFirsts(name);
         nflService.getPlayersByName(capName, drawResults);
     };
 
     // this is a general search function that acts as an interface for the go button. It looks at which control the input is coming from and calls the appropriate get function.
-    this.search = function (e) {
+    this.search = function (e, type) {
         e.preventDefault();
 
         var query = '';
         var form = e.target;
 
-        if (e.target.team.value) {
+        //TODO: fix search by name
+        if (type == 'team') {
             query = form.team.value;
             this.getPlayersByTeam(query);
         }
-        if (e.target.position.value) {
+        if (type == 'pos') {
             query = form.position.value;
             this.getPlayersByPosition(query);
         }
-        if (e.target.player.value) {
+        if (type == 'name') {
             query = form.player.value;
             this.getPlayersByName(query);
         }
@@ -186,7 +231,7 @@ function NFLController() {
         drawRoster();
     };
 
-    this.clearRoster = function (){
+    this.clearRoster = function () {
         nflService.clearRoster();
         drawRoster();
     }

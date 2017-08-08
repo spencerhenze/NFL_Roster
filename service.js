@@ -78,10 +78,10 @@ function NFLService(url, callback) {
 
     // Add / remove funtions
     this.addPlayer = function (id) {
-        var player = playersData.find(player => player.id == id)
 
         // limit the roster length to 15 players
         if (myRoster.length <= 15) {
+        var player = playersData.find(player => player.id == id)
 
             // check to see if the player exists in the roster. If not, add them.
             if (myRoster.indexOf(player) == -1) {
@@ -109,6 +109,12 @@ function NFLService(url, callback) {
         // myRoster.splice(id, 1);
     };
 
+    this.clearRoster = function() {
+        while (myRoster.length > 0){
+            myRoster.pop();
+        }
+        saveRoster();
+    }
 
 
 

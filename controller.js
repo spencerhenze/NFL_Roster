@@ -186,4 +186,9 @@ function NFLController() {
         drawRoster();
     };
 
+    this.clearRoster = function (){
+        nflService.clearRoster();
+        drawRoster();
+    }
+
 } //end of Controller constructor

@@ -2,7 +2,9 @@ body{
     background-color: black;
     background-image: url("//static.nfl.com/static/content/public/photo/2017/01/15/0ap3000000775084.jpg");
     background-size: cover;
-    background-position: fixed;
+    background-attachment: fixed;
+    
+
 }
 
 .site-header{
@@ -22,6 +24,7 @@ body{
 .header-image{
     max-height: 250px;
     width: auto;
+    text-shadow: 0px 0px 10px;
 
 }
 
@@ -35,6 +38,11 @@ body{
 .placeholder-text{
     color: gray;
     font-weight: 600px;
+    text-align: center;
+}
+
+.clear-button{
+    margin: 10px;
     text-align: center;
 }
 

@@ -23,7 +23,7 @@ function NFLController() {
                 <h3>Searching by Name</h3>
                 <form onsubmit="app.controllers.nflController.search(event, '${type}')">
                     <label class="search-control" for="player">Player Name</label>
-                    <input class="search-control" id="search-text" name="player" type="text" placeholder="John Ellway">
+                    <input class="search-control" id="search-text" name="player" type="text" placeholder="Aaron Rodgers">
 
                     <button id="submit-button" type="submit"> Go! </button>
                 </form>

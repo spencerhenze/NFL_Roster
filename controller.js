@@ -13,7 +13,18 @@ function NFLController() {
     function clearResults() {
         document.getElementById('search-results').innerHTML = '';
     }
-    
+
+    function removeHttp(url) {
+        var charArray = url.split('');
+
+        for (var i = 0; i < 5; i++) {
+            charArray.shift();
+        }
+
+        return charArray.join('');
+
+    }
+
     // Draw functions
     function drawForm(type) {
         var template = '';
@@ -65,11 +76,12 @@ function NFLController() {
         var template = `<h2 class="site-section-title">Search Results:</h2>`
 
         players.forEach(player => {
+            var freePhoto = removeHttp(player.photo);
             if (player.pro_status) {
                 template += `
                 <div class="card-wrapper">
                     <div class="player-card">
-                        <img class="card-img-top img-responsive player-image" src="${player.photo}"
+                        <img class="card-img-top img-responsive player-image" src="${freePhoto}"
                             alt="image">
                         <div class="card-block">
                             <h4 class="card-title">${player.fullname}</h4>
@@ -94,7 +106,7 @@ function NFLController() {
         var playerCount = roster.length;
         var remaining = 16
 
-        if(roster.length != 0){
+        if (roster.length != 0) {
             remaining = 16 - playerCount;
         }
 
@@ -106,10 +118,12 @@ function NFLController() {
         }
 
         roster.forEach(player => {
+            var freePhoto = removeHttp(player.photo);
+
             template += `
                 <div class="card-wrapper">
                     <div class="player-card">
-                        <img class="card-img-top img-responsive player-image" src="${player.photo}"
+                        <img class="card-img-top img-responsive player-image" src="${freePhoto}"
                             alt="image">
                         <div class="card-block">
                             <h4 class="card-title">${player.fullname}</h4>

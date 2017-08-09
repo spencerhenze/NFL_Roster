@@ -61,7 +61,7 @@ function NFLService(url, callback) {
 
     this.getPlayersByName = function (name, cb) {
         var filteredPlayers = playersData.filter(player => {
-            if (player.fullname == name || (player.fullname.search(name) != -1)) {
+            if (player.fullname == name || player.firstname == name || player.lastname == name) {
                 return true;
             }
         });

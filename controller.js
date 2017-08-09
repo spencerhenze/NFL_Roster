@@ -181,9 +181,11 @@ function NFLController() {
                 }
             }
         }
+
+        // return capName;
     }
 
-    
+
     //public area
 
     // form selection buttons functions
@@ -203,6 +205,7 @@ function NFLController() {
     };
 
     this.getPlayersByName = function (name) {
+        debugger
         var capName = capitalizeFirsts(name);
         nflService.getPlayersByName(capName, drawResults);
     };

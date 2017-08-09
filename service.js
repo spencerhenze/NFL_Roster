@@ -23,7 +23,7 @@ function NFLService(url, callback) {
             console.log('Player Data Ready');
             console.log('Writing Player Data to localStorage');
             localStorage.setItem('playersData', JSON.stringify(playersData));
-            console.log('Finished writing player Data to localStorage)');
+            console.log('Finished writing player Data to localStorage');
             callback();
         });
     } // end loadPlayerData()

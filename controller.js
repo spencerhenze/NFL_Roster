@@ -1,6 +1,15 @@
 function NFLController() {
     var nflService = new NFLService(apiUrl, ready);
 
+    //handle the loading spinner
+    var loading = true; //start the spinner
+    var apiUrl = "http://api.cbssports.com/fantasy/players/list?version=3.0&SPORT=football&response_format=json";
+
+    function ready() {
+        loading = false; // stop the spinner
+    }
+
+
     function clearResults() {
         document.getElementById('search-results').innerHTML = '';
     }
@@ -53,7 +62,7 @@ function NFLController() {
             clearResults();
         }
 
-        var template = ``
+        var template = `<h2 class="site-section-title">Search Results:</h2>`
 
         players.forEach(player => {
             if (player.pro_status) {
@@ -82,6 +91,13 @@ function NFLController() {
     function drawRoster() {
         var roster = nflService.getRoster();
         var template = '';
+        var playerCount = roster.length;
+        var remaining = 16
+
+        if(roster.length != 0){
+            remaining = 16 - playerCount;
+        }
+
 
         if (roster.length == 0) {
             template = `
@@ -106,15 +122,11 @@ function NFLController() {
             `
         })
         document.getElementById('my-roster').innerHTML = template;
-    }
+        document.getElementById('counter').innerHTML = remaining;
+    } // end drawRoster() funciton
 
-    //handle the loading spinner
-    var loading = true; //start the spinner
-    var apiUrl = "http://api.cbssports.com/fantasy/players/list?version=3.0&SPORT=football&response_format=json";
 
-    function ready() {
-        loading = false; // stop the spinner
-    }
+    // INPUT VALIDATION FUNCTIONS:
 
     // Takes in a string and returns only the first letters of each word, capitalized, as a new string that can be used to search for the team in the API.
     function getAbreviation(userInput) {
@@ -151,6 +163,7 @@ function NFLController() {
         return abbreviation;
     }
 
+    //capitalizes the first letters of each word in the player's names so that they play nice with the API
     function capitalizeFirsts(name) {
         var nameArray = name.split(' ');
         var capName = '';
@@ -170,6 +183,7 @@ function NFLController() {
         }
     }
 
+    
     //public area
 
     // form selection buttons functions

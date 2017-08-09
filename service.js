@@ -3,6 +3,7 @@ function NFLService(url, callback) {
     var playersData = [];
     var myRoster = JSON.parse(localStorage.getItem('myRoster')) || [];
 
+
     function loadPlayersData() {
         //check to see if the data is already stored locally
         var localData = localStorage.getItem('playersData');
@@ -27,13 +28,10 @@ function NFLService(url, callback) {
         });
     } // end loadPlayerData()
 
+    // save funciton
     function saveRoster() {
         localStorage.setItem('myRoster', JSON.stringify(myRoster));
     }
-
-    // call the loadPlayersData() function every time we create a new service
-    loadPlayersData();
-    console.log(playersData);
 
 
     //search functions:
@@ -79,16 +77,14 @@ function NFLService(url, callback) {
     // Add / remove funtions
     this.addPlayer = function (id) {
 
-        // limit the roster length to 15 players
-        if (myRoster.length <= 15) {
+        // limit the roster length to 16 players
+        if (myRoster.length < 16) {
         var player = playersData.find(player => player.id == id)
 
             // check to see if the player exists in the roster. If not, add them.
             if (myRoster.indexOf(player) == -1) {
                 myRoster.push(player);
                 saveRoster();
-                //remove the player from the search results
-                // playersData.splice()
             }
         }
         else{
@@ -101,12 +97,9 @@ function NFLService(url, callback) {
             var currentPlayer = myRoster[i];
             if (currentPlayer.id == id) {
                 myRoster.splice(i, 1);
-                //put the player back in the search results
-                // playersData.splice(0, 0, currentPlayer)
             }
         }
         saveRoster();
-        // myRoster.splice(id, 1);
     };
 
     this.clearRoster = function() {
@@ -116,6 +109,9 @@ function NFLService(url, callback) {
         saveRoster();
     }
 
+    // call the loadPlayersData() function every time we create a new service
+    loadPlayersData();
+    console.log(playersData);
 
 
 

@@ -38,6 +38,7 @@
                         <!--insert player cards here:  -->
                         <div id="my-roster">
                             <h2 class="placeholder-text">Search for a player to add to your roster</h2>
+                            <h4 class = "placeholder-text">You can add up to 16 players</h4>
                             <div class="card-wrapper">
                                 <div class="player-card">
                                     <img class="card-img-top img-responsive hero-image" src="http://s.nflcdn.com/static/content/public/image/fantasy/transparent/200x200/"
@@ -55,6 +56,8 @@
                         <div class="clear-button">
                             <button type="button" class="btn btn-danger" onclick="app.controllers.nflController.clearRoster()">Clear Roster</button>
                         </div>
+                        <div><h5>Slots Remaining: <span id="counter">16</span></h5></div>
+                        
 
                         <!--search section  -->
                         <div class="panel panel-primary">
@@ -77,7 +80,6 @@
                         </div>
 
                         <!--Search Results Here  -->
-                        <h2 class="site-section-title">Search Results:</h2>
                         <div id="search-results"></div>
                     </div>
                 </div>
